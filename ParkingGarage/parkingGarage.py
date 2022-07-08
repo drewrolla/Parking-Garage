@@ -4,11 +4,9 @@
 # currentTicket --> dictionary {}
 
 class Parking():
-    tickets = [range(50)]
-    parkingSpaces = [range(50)]
+    
 
-
-    def __init__(self, parkingDict={}):
+    def __init__(self, parkingDict={}, tickets=[], parkingSpaces=[]):
         parkingDict = {1 : ['available', 'unpaid'],
         2: ['available', 'unpaid'],
         3 : ['available', 'unpaid'],
@@ -25,8 +23,11 @@ class Parking():
         14 : ['available', 'unpaid'],
         15 : ['available', 'unpaid']
         }
-
+        tickets = 15
+        parkingSpaces = 15
         self.parkingDict = parkingDict
+        self.tickets = tickets
+        self.parkingSpaces = parkingSpaces
 
     def takeTicket(self): # decrease tickets -1/ decrease spaces -1 | will use a list
         takenSpots = []
@@ -36,13 +37,13 @@ class Parking():
                 takenSpots.append(self.parkingDict[spot])
                 while True:
                     if self.parkingDict[spot][1] == 'unpaid':
-                        tickets -= 1
-                        parkingSpaces -= 1
-                break
+                        self.tickets -= 1
+                        self.parkingSpaces -= 1
+                    break
+            break
 
 
     def payForParking(self): # will use the dictionary spot1 = { 1 : ['available', 'not paid']}
-        while True:
             for spot in self.parkingDict:
                 askUser = input("Did you pay for your ticket? Yes/No: ").lower()
                 if askUser == 'yes':
@@ -55,15 +56,15 @@ class Parking():
                     print("Invalid input.")
 
     def leaveGarage(self): # will use both lists
-        while True:
-            askUser1 = input("Have you paid for your ticket? Yes/No: ").lower()
             for spot in self.parkingDict:
+                askUser1 = input("Have you paid for your ticket? Yes/No: ").lower()
                 if askUser1 == 'yes':
                     print("Thank you, have a nice day!")
                     while True:
                         if self.parkingDict[spot][1] == 'paid':
-                            tickets += 1
-                            parkingSpaces += 1
+                            self.tickets += 1
+                            self.parkingSpaces += 1
+                        break
                     break
                 elif askUser1 == 'no':
                     print("Please pay for your ticket now.")
@@ -73,7 +74,7 @@ class Parking():
 def run():
     game = Parking()
     while True:
-        prompt = input("What do you want to do? Park/Pay/Leave: ").lower()
+        prompt = input("What do you want to do? Park/Pay/Leave/End: ").lower()
 
         if prompt == 'park':
             game.takeTicket()
@@ -83,7 +84,10 @@ def run():
 
         elif prompt == 'leave':
             game.leaveGarage()
-
+            
+        elif prompt == 'end':
+            break
+        
         else:
             print("Invalid input.")
 
