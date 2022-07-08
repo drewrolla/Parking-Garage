@@ -4,9 +4,8 @@
 # currentTicket --> dictionary {}
 
 class Parking():
-    
 
-    def __init__(self, parkingDict={}, tickets=[], parkingSpaces=[]):
+    def __init__(self, parkingDict={}, tickets=[], parkingSpaces=[]): # this is what the code will come with "standard" - in terms of video games this is the basic game
         parkingDict = {1 : ['available', 'unpaid'],
         2: ['available', 'unpaid'],
         3 : ['available', 'unpaid'],
@@ -40,9 +39,9 @@ class Parking():
                         self.tickets -= 1
                         self.parkingSpaces -= 1
                     break
-            break
+            break # added additional break to fix a bug
 
-
+# methods are the expansion packs
     def payForParking(self): # will use the dictionary spot1 = { 1 : ['available', 'not paid']}
             for spot in self.parkingDict:
                 askUser = input("Did you pay for your ticket? Yes/No: ").lower()
@@ -65,7 +64,7 @@ class Parking():
                             self.tickets += 1
                             self.parkingSpaces += 1
                         break
-                    break
+                    break # added to fix bug
                 elif askUser1 == 'no':
                     print("Please pay for your ticket now.")
                 else:
