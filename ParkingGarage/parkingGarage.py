@@ -4,12 +4,10 @@
 # currentTicket --> dictionary {}
 
 class Parking():
-    tickets = [range(50)]
-    parkingSpaces = [range(50)]
 
-    def __init__(self, parkingDict):
+    def __init__(self, parkingDict={}, tickets=[], parkingSpaces=[]): # this is what the code will come with "standard" - in terms of video games this is the basic game
         parkingDict = {1 : ['available', 'unpaid'],
-        2 : ['available', 'unpaid'],
+        2: ['available', 'unpaid'],
         3 : ['available', 'unpaid'],
         4 : ['available', 'unpaid'],
         5 : ['available', 'unpaid'],
@@ -24,62 +22,72 @@ class Parking():
         14 : ['available', 'unpaid'],
         15 : ['available', 'unpaid']
         }
-        self.parkingDict = parking.Dict
+        tickets = 15
+        parkingSpaces = 15
+        self.parkingDict = parkingDict
+        self.tickets = tickets
+        self.parkingSpaces = parkingSpaces
 
     def takeTicket(self): # decrease tickets -1/ decrease spaces -1 | will use a list
         takenSpots = []
         for spot in self.parkingDict:
-            if self.parkingDict[spot][0] == 'available':
-                print(f"Your parking spot is {spot}")
-            takenSpots.append(self.parkingDict[spot])
-            while True:
-                if self.parkingDict[spot][1] == 'unpaid':
-                    tickets -= 1
-                    parkingSpaces -= 1
-            break
-        
-    def payForParking(self): # will use the dictionary = {1 : ['available , 'not paid']}
-        
-        while True:
-            askUser = input("Did you pay? Yes / No").lower()
+            if self.parkingDict[spot][0] == 'available': # index into list within dictionary. checks to see if spot is available
+                print(f"Your parking spot is {spot}") # prints out what parking spot number you have
+                takenSpots.append(self.parkingDict[spot])
+                while True:
+                    if self.parkingDict[spot][1] == 'unpaid':
+                        self.tickets -= 1
+                        self.parkingSpaces -= 1
+                    break
+            break # added additional break to fix a bug
+
+# methods are the expansion packs
+    def payForParking(self): # will use the dictionary spot1 = { 1 : ['available', 'not paid']}
             for spot in self.parkingDict:
+                askUser = input("Did you pay for your ticket? Yes/No: ").lower()
                 if askUser == 'yes':
                     self.parkingDict[spot][1] = 'paid'
-                    print('Thanks for coming. Your parking pass expires in 15 minutes.')
+                    print("Thanks for coming. Your parking pass expires in 15 minutes.")
                     break
                 elif askUser == 'no':
                     print("Please pay for parking before leaving.")
-                    break
                 else:
-                    print("Invalid input. Please type yes or no.")
+                    print("Invalid input.")
 
     def leaveGarage(self): # will use both lists
-        while True:
-            askUser1 = input("Have you paid for your ticket? Yes / no.").lower()
             for spot in self.parkingDict:
+                askUser1 = input("Have you paid for your ticket? Yes/No: ").lower()
                 if askUser1 == 'yes':
-                    print("thank you, have a nice day!")
+                    print("Thank you, have a nice day!")
                     while True:
                         if self.parkingDict[spot][1] == 'paid':
-                            tickets += 1
-                            parkingSpaces += 1
+                            self.tickets += 1
+                            self.parkingSpaces += 1
                         break
-                    elif askUser1 == 'no':
-                        print("please pay for your ticket now.")
-                    else:
-                        print('Invalid input. Please Try again.')
+                    break # added to fix bug
+                elif askUser1 == 'no':
+                    print("Please pay for your ticket now.")
+                else:
+                    print("Invalid input. Please try again.")
 
 def run():
     game = Parking()
     while True:
-        prompt = input("What do you want to do? Park / Pay / Leave : ").lower()
+        prompt = input("What do you want to do? Park/Pay/Leave/End: ").lower()
+
         if prompt == 'park':
-            game.taketicket()
-        elif prompt =='pay':
-            game.payforParking()
+            game.takeTicket()
+
+        elif prompt == 'pay':
+            game.payForParking()
+
         elif prompt == 'leave':
             game.leaveGarage()
+            
+        elif prompt == 'end':
+            break
+        
         else:
-            print('Inalid. Please try again.')
+            print("Invalid input.")
 
 run()
